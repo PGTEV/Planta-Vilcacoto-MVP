@@ -470,7 +470,7 @@ const Compactacion = () => {
 
 const Inventario = () => {
   const [data, setData] = useState<any[]>([]);
-  const [form, setForm] = useState({ materialType: 'Plástico PET Fardos', quantityKg: '', location: '' });
+  const [form, setForm] = useState({ materialType: 'Plástico PET Fardos', quantityKg: '' });
 
   const fetchData = async () => {
     try { const res = await axios.get(`${API_URL}/inventory`); setData(res.data); } catch (e) { console.error(e); }
@@ -480,8 +480,8 @@ const Inventario = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post(`${API_URL}/inventory`, { materialType: form.materialType, quantityKg: parseFloat(form.quantityKg) * 1000, location: form.location });
-      setForm({ ...form, quantityKg: '', location: '' }); fetchData();
+      await axios.post(`${API_URL}/inventory`, { materialType: form.materialType, quantityKg: parseFloat(form.quantityKg) * 1000, location: 'Almacén Principal' });
+      setForm({ ...form, quantityKg: '' }); fetchData();
     } catch (error) { alert('Error'); }
   };
 
@@ -496,11 +496,8 @@ const Inventario = () => {
       <div className="glass-panel" style={{ padding: '2rem' }}>
         <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '600px' }} onSubmit={handleSubmit}>
           <div><label className="input-label">Tipo de Material</label><select className="input-field" value={form.materialType} onChange={e=>setForm({...form, materialType: e.target.value})}><option>Plástico PET Fardos</option><option>Papel y Cartón Fardos</option><option>Abono Orgánico (Compost)</option><option>Vidrio Triturado</option></select></div>
-          <div style={{ display: 'flex', gap: '1rem' }}>
-            <div style={{ flex: 1 }}><label className="input-label">Cantidad (Ton)</label><input required type="number" step="0.01" className="input-field" placeholder="1.5" value={form.quantityKg} onChange={e=>setForm({...form, quantityKg: e.target.value})} /></div>
-            <div style={{ flex: 1 }}><label className="input-label">Ubicación Física</label><input required type="text" className="input-field" placeholder="Almacén 2" value={form.location} onChange={e=>setForm({...form, location: e.target.value})} /></div>
-          </div>
-          <button className="btn btn-primary" style={{ marginTop: '1rem' }}>Añadir al Inventario</button>
+          <div><label className="input-label">Cantidad (Ton)</label><input required type="number" step="0.01" className="input-field" placeholder="1.5" value={form.quantityKg} onChange={e=>setForm({...form, quantityKg: e.target.value})} /></div>
+          <button className="btn btn-primary" style={{ marginTop: '1rem' }}>Añadir al Almacén Principal</button>
         </form>
         <DataTable columns={['ID', 'Material', 'Cantidad (Ton)', 'Ubicación', 'Fecha de Registro']} data={data.map(d => ({ id: d.id.slice(0,8), m: d.materialType, q: kgToTon(d.quantityKg), l: d.location, date: new Date(d.recordedAt).toLocaleString() }))} />
       </div>
