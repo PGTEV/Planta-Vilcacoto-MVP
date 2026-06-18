@@ -7,114 +7,87 @@ const doc = new Document({
       properties: {},
       children: [
         new Paragraph({
-          text: 'Guía de Uso - Sistema Operativo Vilcacoto',
+          text: 'Guía de Exposición: Sistema de Gestión Operativa Vilcacoto',
           heading: HeadingLevel.TITLE,
         }),
         new Paragraph({ text: '' }),
+        
+        // SECCIÓN 1
+        new Paragraph({ text: '1. Introducción al Problema', heading: HeadingLevel.HEADING_1 }),
         new Paragraph({
-          text: 'Introducción',
-          heading: HeadingLevel.HEADING_1,
+          text: 'La gestión operativa en muchas plantas de tratamiento sufre de un problema grave: la desconexión y el papel. Los camiones entran, la basura se clasifica y se tritura, pero todo se anota a mano. Esto impide saber la verdadera eficiencia de la planta, genera errores matemáticos y nos deja ciegos frente a auditorías ambientales.',
         }),
         new Paragraph({
-          text: 'Este documento detalla el funcionamiento del Sistema de Información de la Planta de Tratamiento de Residuos Sólidos de Vilcacoto.',
-        }),
-        new Paragraph({ text: '' }),
-        new Paragraph({
-          text: 'Arquitectura del Sistema',
+          text: 'Solución:',
           heading: HeadingLevel.HEADING_2,
         }),
         new Paragraph({
+          text: 'Hemos desarrollado un Sistema Web de Gestión Operativa que digitaliza el 100% de la planta en 9 módulos secuenciales, estandarizado para trabajar a gran escala en Toneladas.',
+        }),
+        new Paragraph({ text: '' }),
+
+        // SECCIÓN 2
+        new Paragraph({ text: '2. Valor Agregado: ¿Cómo mejora la Planta?', heading: HeadingLevel.HEADING_1 }),
+        new Paragraph({
           children: [
-            new TextRun({ text: '1. Frontend (React + Vite): ', bold: true }),
-            new TextRun('Es la interfaz visual. Se corre con el comando "npm run dev".'),
+            new TextRun({ text: '1. Inteligencia en Tiempo Real: ', bold: true }),
+            new TextRun('El Dashboard Gerencial no es estático. Si hoy entraron 100 Toneladas y rescatamos 30 Toneladas, el sistema autocalcula la Eficiencia (30%).'),
           ],
         }),
         new Paragraph({
           children: [
-            new TextRun({ text: '2. Backend (NestJS): ', bold: true }),
-            new TextRun('Es el cerebro lógico. Se corre con "npm run start:dev". Procesa los pesos, lixiviados y materiales.'),
+            new TextRun({ text: '2. Cero Errores (Automatización): ', bold: true }),
+            new TextRun('El sistema procesa en Toneladas y calcula pesos netos automáticamente, evitando el uso de calculadoras en la balanza.'),
           ],
         }),
         new Paragraph({
           children: [
-            new TextRun({ text: '3. Base de Datos (PostgreSQL): ', bold: true }),
-            new TextRun('Almacena toda la información de forma segura en el puerto 5432.'),
+            new TextRun({ text: '3. Trazabilidad: ', bold: true }),
+            new TextRun('Control total de la procedencia y el destino final de la basura.'),
           ],
         }),
         new Paragraph({ text: '' }),
+
+        // SECCIÓN 3
+        new Paragraph({ text: '3. El Flujo Operativo (Los 9 Módulos)', heading: HeadingLevel.HEADING_1 }),
+        
+        new Paragraph({ text: 'Módulo 1 y 2: Entrada y Descarga (Realidad Peruana)', heading: HeadingLevel.HEADING_2 }),
         new Paragraph({
-          text: 'Módulos Operativos (9 Pasos)',
-          heading: HeadingLevel.HEADING_2,
+          text: 'Ejemplo: Llega el Volquete ABC-123. Registra 18.5 Ton brutos y 8.5 Ton vacíos. El sistema saca 10 Ton Netas. En el módulo 2, lo asignamos a la "Plataforma de Descarga General", adaptándonos a que los camiones traen basura mezclada.',
         }),
+
+        new Paragraph({ text: 'Módulo 3 y 4: Recuperación', heading: HeadingLevel.HEADING_2 }),
         new Paragraph({
-          children: [
-            new TextRun({ text: '1. Recepción y Pesaje: ', bold: true }),
-            new TextRun('Registro de vehículos y automatización del peso neto (Peso Bruto - Tara).'),
-          ],
+          text: 'Ejemplo: De la plataforma general, los operarios logran separar 1.5 Ton de Plástico PET en el Módulo 3. Si ocupa mucho espacio, pasa al Módulo 4 donde se registra que las trituradoras procesaron esas 1.5 Ton, controlando así las máquinas.',
         }),
+
+        new Paragraph({ text: 'Módulo 5 y 6: Transformación', heading: HeadingLevel.HEADING_2 }),
         new Paragraph({
-          children: [
-            new TextRun({ text: '2. Descarga y Almacenamiento Temporal: ', bold: true }),
-            new TextRun('Recepción en bahías para inspección previa a la separación.'),
-          ],
+          text: 'Ejemplo: La materia orgánica se registra en la bitácora del Módulo 5 (ej. 65°C de temperatura del compost). La basura no aprovechable va a la prensa en el Módulo 6, donde 4 Toneladas se compactan en solo 2 metros cúbicos (m3).',
         }),
+
+        new Paragraph({ text: 'Módulo 7 y 8: Negocios y Ambiente', heading: HeadingLevel.HEADING_2 }),
         new Paragraph({
-          children: [
-            new TextRun({ text: '3. Segregación o Clasificación: ', bold: true }),
-            new TextRun('Cuantificación de Papel, Cartón, Plásticos, Vidrio, Metales, Textiles y Orgánicos.'),
-          ],
+          text: 'Ejemplo Negocio (Mod 7): El plástico triturado va directamente al "Almacén Principal". El área de ventas ve este stock en tiempo real. \nEjemplo Ambiental (Mod 8): Se registran parámetros como el pH (7.2) de los líquidos lixiviados para cumplir con el Ministerio del Ambiente.',
         }),
+
+        new Paragraph({ text: 'Módulo 9: Cierre', heading: HeadingLevel.HEADING_2 }),
         new Paragraph({
-          children: [
-            new TextRun({ text: '4. Trituración: ', bold: true }),
-            new TextRun('Reducción de tamaño de plásticos o metales mediante máquinas, con registro por lotes.'),
-          ],
-        }),
-        new Paragraph({
-          children: [
-            new TextRun({ text: '5. Tratamiento de Residuos Orgánicos: ', bold: true }),
-            new TextRun('Bitácora de temperatura/humedad para Compostaje y Biodigestión (Biogás).'),
-          ],
-        }),
-        new Paragraph({
-          children: [
-            new TextRun({ text: '6. Compactación: ', bold: true }),
-            new TextRun('Compresión de residuos no aprovechables registrando volumen final en m3.'),
-          ],
-        }),
-        new Paragraph({
-          children: [
-            new TextRun({ text: '7. Almacenamiento de Reciclables: ', bold: true }),
-            new TextRun('Inventario de materiales listos para comercialización.'),
-          ],
-        }),
-        new Paragraph({
-          children: [
-            new TextRun({ text: '8. Tratamiento de Lixiviados: ', bold: true }),
-            new TextRun('Monitoreo químico (pH, DBO, DQO) del líquido generado por la basura para evitar contaminación.'),
-          ],
-        }),
-        new Paragraph({
-          children: [
-            new TextRun({ text: '9. Disposición Final: ', bold: true }),
-            new TextRun('Envío y registro de los rechazos compactados al relleno sanitario autorizado.'),
-          ],
+          text: 'Ejemplo: El camión XYZ-987 se lleva los 2 metros cúbicos de basura inservible y compactada al Relleno Sanitario Municipal. Aquí el ciclo se cierra de manera formal.',
         }),
         new Paragraph({ text: '' }),
+
+        // SECCIÓN 4
+        new Paragraph({ text: '4. Conclusión', heading: HeadingLevel.HEADING_1 }),
         new Paragraph({
-          text: 'Cómo arrancar el proyecto',
-          heading: HeadingLevel.HEADING_1,
+          text: 'No es un simple formulario. Es una herramienta de Toma de Decisiones gerenciales que guía a los operarios y transforma toneladas de basura en métricas claras para hacer de Vilcacoto una planta financieramente y ecológicamente sostenible.',
         }),
-        new Paragraph({ text: '1. Inicia Docker y levanta la base de datos con: docker compose up -d' }),
-        new Paragraph({ text: '2. En una terminal, entra a la carpeta "backend" y ejecuta: npm run start:dev' }),
-        new Paragraph({ text: '3. En otra terminal, entra a la carpeta "frontend" y ejecuta: npm run dev' }),
-        new Paragraph({ text: '4. Abre http://localhost:5173 en tu navegador para usar el sistema.' }),
       ],
     },
   ],
 });
 
 Packer.toBuffer(doc).then((buffer) => {
-  fs.writeFileSync('../Guia_Vilcacoto.docx', buffer);
+  fs.writeFileSync('../Guia_Vilcacoto_Sustentacion.docx', buffer);
   console.log('Documento creado exitosamente!');
 });
