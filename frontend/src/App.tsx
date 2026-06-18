@@ -100,34 +100,71 @@ const kgToTon = (kg: number) => (kg / 1000).toFixed(2);
 
 // ---------------- UI COMPONENTS ----------------
 
-const Dashboard = () => (
-  <div>
-    <h1 style={{ marginBottom: '1.5rem' }}>Dashboard Gerencial</h1>
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
-      <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <div style={{ background: 'rgba(59, 130, 246, 0.1)', padding: '1rem', borderRadius: '50%', color: '#3b82f6' }}><Truck size={24} /></div>
-        <div>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>Ingresos Hoy</p>
-          <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>42 Vehículos</p>
+const Dashboard = () => {
+  const [stats, setStats] = useState({ vehicles: 0, recoveredTon: 0, efficiency: 0 });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const [wRes, sRes] = await Promise.all([
+          axios.get(`${API_URL}/weighings`),
+          axios.get(`${API_URL}/segregations`)
+        ]);
+
+        const weighings = wRes.data;
+        const segregations = sRes.data;
+
+        const vehiclesCount = weighings.length;
+        const totalNetWeightKg = weighings.reduce((sum: number, w: any) => sum + Number(w.netWeightKg), 0);
+        
+        const totalRecoveredKg = segregations.reduce((sum: number, s: any) => 
+          sum + Number(s.paperWeightKg) + Number(s.plasticsWeightKg) + Number(s.glassWeightKg) + 
+          Number(s.metalsWeightKg) + Number(s.textilesWeightKg) + Number(s.organicWeightKg), 0
+        );
+
+        const efficiency = totalNetWeightKg > 0 ? (totalRecoveredKg / totalNetWeightKg) * 100 : 0;
+
+        setStats({
+          vehicles: vehiclesCount,
+          recoveredTon: totalRecoveredKg / 1000,
+          efficiency: efficiency
+        });
+      } catch (error) {
+        console.error("Error cargando dashboard:", error);
+      }
+    };
+    fetchStats();
+  }, []);
+
+  return (
+    <div>
+      <h1 style={{ marginBottom: '1.5rem' }}>Dashboard Gerencial</h1>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+        <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ background: 'rgba(59, 130, 246, 0.1)', padding: '1rem', borderRadius: '50%', color: '#3b82f6' }}><Truck size={24} /></div>
+          <div>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>Ingresos Totales (Histórico)</p>
+            <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{stats.vehicles} Vehículos</p>
+          </div>
         </div>
-      </div>
-      <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <div style={{ background: 'rgba(16, 185, 129, 0.1)', padding: '1rem', borderRadius: '50%', color: '#10b981' }}><Recycle size={24} /></div>
-        <div>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>Material Recuperado</p>
-          <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>18.5 Ton</p>
+        <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ background: 'rgba(16, 185, 129, 0.1)', padding: '1rem', borderRadius: '50%', color: '#10b981' }}><Recycle size={24} /></div>
+          <div>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>Material Recuperado</p>
+            <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{stats.recoveredTon.toFixed(2)} Ton</p>
+          </div>
         </div>
-      </div>
-      <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <div style={{ background: 'rgba(245, 158, 11, 0.1)', padding: '1rem', borderRadius: '50%', color: '#f59e0b' }}><TrendingUp size={24} /></div>
-        <div>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>Eficiencia de Planta</p>
-          <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>76.4%</p>
+        <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ background: 'rgba(245, 158, 11, 0.1)', padding: '1rem', borderRadius: '50%', color: '#f59e0b' }}><TrendingUp size={24} /></div>
+          <div>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>Eficiencia de Planta</p>
+            <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{stats.efficiency.toFixed(1)}%</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const Recepcion = () => {
   const [activeTab, setActiveTab] = useState('ingreso');
