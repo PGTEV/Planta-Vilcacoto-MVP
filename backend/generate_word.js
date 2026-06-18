@@ -43,31 +43,61 @@ const doc = new Document({
         }),
         new Paragraph({ text: '' }),
         new Paragraph({
-          text: 'Módulos Principales',
+          text: 'Módulos Operativos (9 Pasos)',
           heading: HeadingLevel.HEADING_2,
         }),
         new Paragraph({
           children: [
-            new TextRun({ text: '- Recepción y Pesaje: ', bold: true }),
-            new TextRun('Permite registrar vehículos y automatizar el cálculo del peso neto usando el peso bruto y la tara (con validación de máximos).'),
+            new TextRun({ text: '1. Recepción y Pesaje: ', bold: true }),
+            new TextRun('Registro de vehículos y automatización del peso neto (Peso Bruto - Tara).'),
           ],
         }),
         new Paragraph({
           children: [
-            new TextRun({ text: '- Segregación: ', bold: true }),
-            new TextRun('Permite cuantificar los materiales reciclables (Plásticos, Papel, Vidrio) y orgánicos.'),
+            new TextRun({ text: '2. Descarga y Almacenamiento Temporal: ', bold: true }),
+            new TextRun('Recepción en bahías para inspección previa a la separación.'),
           ],
         }),
         new Paragraph({
           children: [
-            new TextRun({ text: '- Tratamiento (Compostaje): ', bold: true }),
-            new TextRun('Bitácora digital para registrar temperatura y humedad de las pilas de compost.'),
+            new TextRun({ text: '3. Segregación o Clasificación: ', bold: true }),
+            new TextRun('Cuantificación de Papel, Cartón, Plásticos, Vidrio, Metales, Textiles y Orgánicos.'),
           ],
         }),
         new Paragraph({
           children: [
-            new TextRun({ text: '- Control Ambiental: ', bold: true }),
-            new TextRun('Monitoreo del pH, DBO y DQO de los lixiviados con alertas.'),
+            new TextRun({ text: '4. Trituración: ', bold: true }),
+            new TextRun('Reducción de tamaño de plásticos o metales mediante máquinas, con registro por lotes.'),
+          ],
+        }),
+        new Paragraph({
+          children: [
+            new TextRun({ text: '5. Tratamiento de Residuos Orgánicos: ', bold: true }),
+            new TextRun('Bitácora de temperatura/humedad para Compostaje y Biodigestión (Biogás).'),
+          ],
+        }),
+        new Paragraph({
+          children: [
+            new TextRun({ text: '6. Compactación: ', bold: true }),
+            new TextRun('Compresión de residuos no aprovechables registrando volumen final en m3.'),
+          ],
+        }),
+        new Paragraph({
+          children: [
+            new TextRun({ text: '7. Almacenamiento de Reciclables: ', bold: true }),
+            new TextRun('Inventario de materiales listos para comercialización.'),
+          ],
+        }),
+        new Paragraph({
+          children: [
+            new TextRun({ text: '8. Tratamiento de Lixiviados: ', bold: true }),
+            new TextRun('Monitoreo químico (pH, DBO, DQO) del líquido generado por la basura para evitar contaminación.'),
+          ],
+        }),
+        new Paragraph({
+          children: [
+            new TextRun({ text: '9. Disposición Final: ', bold: true }),
+            new TextRun('Envío y registro de los rechazos compactados al relleno sanitario autorizado.'),
           ],
         }),
         new Paragraph({ text: '' }),

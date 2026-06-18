@@ -8,10 +8,16 @@ export class Treatment {
   @Column({ length: 50 })
   batchId: string; // e.g., 'LOTE-001'
 
-  @Column({ type: 'decimal', precision: 5, scale: 2 })
+  @Column({ length: 50, default: 'Compostaje' })
+  treatmentType: string; // Compostaje o Biodigestión (Biogás)
+
+  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
+  producedVolume: number; // Cantidad de Compost o Biogás producido
+
+  @Column({ type: 'decimal', precision: 5, scale: 2, nullable: true })
   temperatureCelsius: number;
 
-  @Column({ type: 'decimal', precision: 5, scale: 2 })
+  @Column({ type: 'decimal', precision: 5, scale: 2, nullable: true })
   humidityPercentage: number;
 
   @Column({ default: false })

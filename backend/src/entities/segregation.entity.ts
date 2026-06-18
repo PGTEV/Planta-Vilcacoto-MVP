@@ -20,6 +20,12 @@ export class Segregation {
   @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
   rejectsWeightKg: number; // Material no aprovechable
 
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
+  metalsWeightKg: number;
+
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
+  textilesWeightKg: number;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   dateRecorded: Date;
 

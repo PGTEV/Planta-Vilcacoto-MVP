@@ -3,20 +3,22 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react
 import axios from 'axios';
 import { 
   Truck, Warehouse, Recycle, Leaf, PackageSearch, 
-  Trash2, Wind, BarChart3, Menu, Activity, Droplets, TrendingUp, CheckCircle
+  Trash2, Wind, BarChart3, Menu, Activity, Droplets, TrendingUp, CheckCircle, Scissors, Minimize2
 } from 'lucide-react';
 
 const API_URL = 'http://localhost:3000';
 
 const MENU_ITEMS = [
   { path: '/', icon: BarChart3, label: 'Dashboard' },
-  { path: '/recepcion', icon: Truck, label: 'Recepción y Pesaje' },
-  { path: '/almacenamiento', icon: Warehouse, label: 'Almacenamiento' },
-  { path: '/segregacion', icon: Recycle, label: 'Segregación' },
-  { path: '/tratamiento', icon: Leaf, label: 'Tratamiento' },
-  { path: '/inventario', icon: PackageSearch, label: 'Inventario' },
-  { path: '/disposicion', icon: Trash2, label: 'Disposición Final' },
-  { path: '/ambiental', icon: Wind, label: 'Control Ambiental' },
+  { path: '/recepcion', icon: Truck, label: '1. Recepción y Pesaje' },
+  { path: '/almacenamiento', icon: Warehouse, label: '2. Descarga Temporal' },
+  { path: '/segregacion', icon: Recycle, label: '3. Segregación' },
+  { path: '/trituracion', icon: Scissors, label: '4. Trituración' },
+  { path: '/tratamiento', icon: Leaf, label: '5. Tratamiento Orgánico' },
+  { path: '/compactacion', icon: Minimize2, label: '6. Compactación' },
+  { path: '/inventario', icon: PackageSearch, label: '7. Materiales Reciclables' },
+  { path: '/ambiental', icon: Droplets, label: '8. Tratamiento Lixiviados' },
+  { path: '/disposicion', icon: Trash2, label: '9. Disposición Final' },
 ];
 
 function Sidebar() {
@@ -168,7 +170,7 @@ const Recepcion = () => {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-        <h1 style={{ margin: 0 }}>Recepción y Pesaje</h1>
+        <h1 style={{ margin: 0 }}>1. Recepción y Pesaje</h1>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <button className={`btn ${activeTab === 'ingreso' ? 'btn-primary' : 'glass-panel'}`} onClick={() => setActiveTab('ingreso')}>Registro</button>
           <button className={`btn ${activeTab === 'pesaje' ? 'btn-primary' : 'glass-panel'}`} onClick={() => setActiveTab('pesaje')}>Pesaje</button>
@@ -250,13 +252,15 @@ const Recepcion = () => {
 
 const Segregacion = () => (
   <div>
-    <h1 style={{ marginBottom: '1.5rem' }}>Segregación y Clasificación</h1>
+    <h1 style={{ marginBottom: '1.5rem' }}>3. Segregación o Clasificación</h1>
     <div className="glass-panel" style={{ padding: '2rem' }}>
-      <h2 style={{ marginBottom: '1rem' }}>Registro de Materiales</h2>
+      <h2 style={{ marginBottom: '1rem' }}>Registro de Materiales Recuperados</h2>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+        <div><label className="input-label">Papel y Cartón</label><input type="number" className="input-field" placeholder="Kg" /></div>
         <div><label className="input-label">Plásticos (PET, PEAD)</label><input type="number" className="input-field" placeholder="Kg" /></div>
-        <div><label className="input-label">Papel / Cartón</label><input type="number" className="input-field" placeholder="Kg" /></div>
         <div><label className="input-label">Vidrio</label><input type="number" className="input-field" placeholder="Kg" /></div>
+        <div><label className="input-label">Metales</label><input type="number" className="input-field" placeholder="Kg" /></div>
+        <div><label className="input-label">Textiles</label><input type="number" className="input-field" placeholder="Kg" /></div>
         <div><label className="input-label">Fracción Orgánica</label><input type="number" className="input-field" placeholder="Kg" /></div>
       </div>
       <button className="btn btn-primary" style={{ marginTop: '1.5rem' }}>Guardar Clasificación</button>
@@ -264,18 +268,67 @@ const Segregacion = () => (
   </div>
 );
 
+const Trituracion = () => (
+  <div>
+    <h1 style={{ marginBottom: '1.5rem' }}>4. Trituración</h1>
+    <div className="glass-panel" style={{ padding: '2rem' }}>
+      <h2 style={{ marginBottom: '1rem' }}>Registro de Reducción de Tamaño</h2>
+      <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '600px' }}>
+        <div>
+          <label className="input-label">Tipo de Material a Triturar</label>
+          <select className="input-field">
+            <option>Plásticos</option>
+            <option>Papel y Cartón</option>
+            <option>Metales</option>
+          </select>
+        </div>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <div style={{ flex: 1 }}><label className="input-label">Lote ID</label><input type="text" className="input-field" placeholder="LOTE-001" /></div>
+          <div style={{ flex: 1 }}><label className="input-label">Peso Triturado (Kg)</label><input type="number" className="input-field" placeholder="500" /></div>
+        </div>
+        <button className="btn btn-primary" style={{ marginTop: '1rem' }}>Registrar Trituración</button>
+      </form>
+    </div>
+  </div>
+);
+
 const Tratamiento = () => (
   <div>
-    <h1 style={{ marginBottom: '1.5rem' }}>Tratamiento (Compostaje)</h1>
+    <h1 style={{ marginBottom: '1.5rem' }}>5. Tratamiento de Residuos Orgánicos</h1>
     <div className="glass-panel" style={{ padding: '2rem' }}>
-      <h2 style={{ marginBottom: '1rem' }}>Bitácora de Pilas</h2>
+      <h2 style={{ marginBottom: '1rem' }}>Bitácora de Transformación</h2>
       <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '600px' }}>
-        <div><label className="input-label">Pila / Lote ID</label><input type="text" className="input-field" placeholder="LOTE-001" /></div>
+        <div>
+          <label className="input-label">Tipo de Tratamiento</label>
+          <select className="input-field">
+            <option>Compostaje (Abono orgánico)</option>
+            <option>Biodigestión (Biogás)</option>
+          </select>
+        </div>
+        <div><label className="input-label">Lote / Pila ID</label><input type="text" className="input-field" placeholder="LOTE-ORG-001" /></div>
         <div style={{ display: 'flex', gap: '1rem' }}>
           <div style={{ flex: 1 }}><label className="input-label">Temperatura (°C)</label><input type="number" className="input-field" placeholder="65" /></div>
           <div style={{ flex: 1 }}><label className="input-label">Humedad (%)</label><input type="number" className="input-field" placeholder="50" /></div>
         </div>
+        <div><label className="input-label">Producto Obtenido (Kg o m3)</label><input type="number" className="input-field" placeholder="Cantidad" /></div>
         <button className="btn btn-primary" style={{ marginTop: '1rem' }}>Registrar Monitoreo</button>
+      </form>
+    </div>
+  </div>
+);
+
+const Compactacion = () => (
+  <div>
+    <h1 style={{ marginBottom: '1.5rem' }}>6. Compactación</h1>
+    <div className="glass-panel" style={{ padding: '2rem' }}>
+      <h2 style={{ marginBottom: '1rem' }}>Compresión de No Aprovechables</h2>
+      <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '600px' }}>
+        <div><label className="input-label">Lote ID</label><input type="text" className="input-field" placeholder="COMP-001" /></div>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <div style={{ flex: 1 }}><label className="input-label">Peso Original (Kg)</label><input type="number" className="input-field" placeholder="1000" /></div>
+          <div style={{ flex: 1 }}><label className="input-label">Volumen Compactado (m3)</label><input type="number" className="input-field" placeholder="2.5" /></div>
+        </div>
+        <button className="btn btn-primary" style={{ marginTop: '1rem' }}>Registrar Compactación</button>
       </form>
     </div>
   </div>
@@ -283,11 +336,11 @@ const Tratamiento = () => (
 
 const Ambiental = () => (
   <div>
-    <h1 style={{ marginBottom: '1.5rem' }}>Control Ambiental</h1>
+    <h1 style={{ marginBottom: '1.5rem' }}>8. Tratamiento de Lixiviados</h1>
     <div className="glass-panel" style={{ padding: '2rem' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
         <Droplets size={32} color="#3b82f6" />
-        <h2 style={{ margin: 0 }}>Monitoreo de Lixiviados</h2>
+        <h2 style={{ margin: 0 }}>Monitoreo Químico</h2>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
         <div><label className="input-label">pH</label><input type="number" className="input-field" placeholder="7.2" /></div>
@@ -342,12 +395,14 @@ function AppContent() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/recepcion" element={<Recepcion />} />
-            <Route path="/almacenamiento" element={<GenericModule title="Almacenamiento Temporal" />} />
+            <Route path="/almacenamiento" element={<GenericModule title="2. Descarga y Almacenamiento Temporal" />} />
             <Route path="/segregacion" element={<Segregacion />} />
+            <Route path="/trituracion" element={<Trituracion />} />
             <Route path="/tratamiento" element={<Tratamiento />} />
-            <Route path="/inventario" element={<GenericModule title="Inventario y Comercialización" />} />
-            <Route path="/disposicion" element={<GenericModule title="Disposición Final (Relleno)" />} />
+            <Route path="/compactacion" element={<Compactacion />} />
+            <Route path="/inventario" element={<GenericModule title="7. Almacenamiento de Materiales Reciclables" />} />
             <Route path="/ambiental" element={<Ambiental />} />
+            <Route path="/disposicion" element={<GenericModule title="9. Disposición Final (Relleno Sanitario)" />} />
           </Routes>
         </main>
       </div>

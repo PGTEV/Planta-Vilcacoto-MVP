@@ -8,6 +8,8 @@ import { WeighingsModule } from './weighings/weighings.module';
 import { SegregationsModule } from './segregations/segregations.module';
 import { TreatmentsModule } from './treatments/treatments.module';
 import { EnvironmentalLogsModule } from './environmental-logs/environmental-logs.module';
+import { CrushingModule } from './crushing/crushing.module';
+import { CompactionModule } from './compaction/compaction.module';
 
 @Module({
   imports: [
@@ -33,6 +35,8 @@ import { EnvironmentalLogsModule } from './environmental-logs/environmental-logs
     SegregationsModule,
     TreatmentsModule,
     EnvironmentalLogsModule,
+    CrushingModule,
+    CompactionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
