@@ -10,6 +10,9 @@ import { TreatmentsModule } from './treatments/treatments.module';
 import { EnvironmentalLogsModule } from './environmental-logs/environmental-logs.module';
 import { CrushingModule } from './crushing/crushing.module';
 import { CompactionModule } from './compaction/compaction.module';
+import { StorageModule } from './storage/storage.module';
+import { InventoryModule } from './inventory/inventory.module';
+import { DisposalModule } from './disposal/disposal.module';
 
 @Module({
   imports: [
@@ -37,6 +40,9 @@ import { CompactionModule } from './compaction/compaction.module';
     EnvironmentalLogsModule,
     CrushingModule,
     CompactionModule,
+    StorageModule,
+    InventoryModule,
+    DisposalModule,
   ],
   controllers: [AppController],
   providers: [AppService],

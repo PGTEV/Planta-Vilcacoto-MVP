@@ -352,6 +352,79 @@ const Ambiental = () => (
   </div>
 );
 
+const Almacenamiento = () => (
+  <div>
+    <h1 style={{ marginBottom: '1.5rem' }}>2. Descarga y Almacenamiento Temporal</h1>
+    <div className="glass-panel" style={{ padding: '2rem' }}>
+      <h2 style={{ marginBottom: '1rem' }}>Asignar Vehículo a Bahía</h2>
+      <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '600px' }}>
+        <div>
+          <label className="input-label">ID del Pesaje (Vehículo)</label>
+          <input type="text" className="input-field" placeholder="Buscar camión pesado recientemente..." />
+        </div>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <div style={{ flex: 1 }}>
+            <label className="input-label">Zona / Bahía</label>
+            <select className="input-field">
+              <option>Bahía de Recepción A (Inorgánicos)</option>
+              <option>Bahía de Recepción B (Orgánicos)</option>
+              <option>Zona de Cuarentena</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label className="input-label">Notas de Inspección</label>
+          <input type="text" className="input-field" placeholder="Material viene muy húmedo, posible penalidad..." />
+        </div>
+        <button className="btn btn-primary" style={{ marginTop: '1rem' }}>Asignar a Bahía</button>
+      </form>
+    </div>
+  </div>
+);
+
+const Inventario = () => (
+  <div>
+    <h1 style={{ marginBottom: '1.5rem' }}>7. Almacenamiento de Materiales Reciclables</h1>
+    <div className="glass-panel" style={{ padding: '2rem' }}>
+      <h2 style={{ marginBottom: '1rem' }}>Registrar en Inventario Final</h2>
+      <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '600px' }}>
+        <div>
+          <label className="input-label">Tipo de Material Recuperado</label>
+          <select className="input-field">
+            <option>Plástico PET Fardos</option>
+            <option>Papel y Cartón Fardos</option>
+            <option>Abono Orgánico (Compost)</option>
+            <option>Vidrio Triturado</option>
+          </select>
+        </div>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <div style={{ flex: 1 }}><label className="input-label">Cantidad (Kg)</label><input type="number" className="input-field" placeholder="1500" /></div>
+          <div style={{ flex: 1 }}><label className="input-label">Ubicación Física</label><input type="text" className="input-field" placeholder="Almacén 2" /></div>
+        </div>
+        <button className="btn btn-primary" style={{ marginTop: '1rem' }}>Añadir al Inventario</button>
+      </form>
+    </div>
+  </div>
+);
+
+const DisposicionFinal = () => (
+  <div>
+    <h1 style={{ marginBottom: '1.5rem' }}>9. Disposición Final (Relleno Sanitario)</h1>
+    <div className="glass-panel" style={{ padding: '2rem' }}>
+      <h2 style={{ marginBottom: '1rem' }}>Despacho de Rechazos</h2>
+      <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '600px' }}>
+        <div><label className="input-label">Destino</label><input type="text" className="input-field" placeholder="Relleno Sanitario Municipal" /></div>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <div style={{ flex: 1 }}><label className="input-label">Volumen (m3)</label><input type="number" className="input-field" placeholder="10" /></div>
+          <div style={{ flex: 1 }}><label className="input-label">Peso Estimado (Kg)</label><input type="number" className="input-field" placeholder="4000" /></div>
+        </div>
+        <div><label className="input-label">Placa de Vehículo de Transporte</label><input type="text" className="input-field" placeholder="XYZ-987" /></div>
+        <button className="btn btn-primary" style={{ marginTop: '1rem', backgroundColor: '#ef4444' }}>Registrar Salida a Disposición Final</button>
+      </form>
+    </div>
+  </div>
+);
+
 // Generic wrapper for the rest
 const GenericModule = ({ title }: { title: string }) => (
   <div>
@@ -395,14 +468,14 @@ function AppContent() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/recepcion" element={<Recepcion />} />
-            <Route path="/almacenamiento" element={<GenericModule title="2. Descarga y Almacenamiento Temporal" />} />
+            <Route path="/almacenamiento" element={<Almacenamiento />} />
             <Route path="/segregacion" element={<Segregacion />} />
             <Route path="/trituracion" element={<Trituracion />} />
             <Route path="/tratamiento" element={<Tratamiento />} />
             <Route path="/compactacion" element={<Compactacion />} />
-            <Route path="/inventario" element={<GenericModule title="7. Almacenamiento de Materiales Reciclables" />} />
+            <Route path="/inventario" element={<Inventario />} />
             <Route path="/ambiental" element={<Ambiental />} />
-            <Route path="/disposicion" element={<GenericModule title="9. Disposición Final (Relleno Sanitario)" />} />
+            <Route path="/disposicion" element={<DisposicionFinal />} />
           </Routes>
         </main>
       </div>
