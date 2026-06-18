@@ -244,7 +244,7 @@ const Almacenamiento = () => {
   const [weighings, setWeighings] = useState<any[]>([]);
   
   const [weighingId, setWeighingId] = useState('');
-  const [zone, setZone] = useState('Bahía de Recepción A (Inorgánicos)');
+  const [zone, setZone] = useState('Plataforma de Descarga General');
   const [notes, setNotes] = useState('');
 
   const fetchData = async () => {
@@ -271,7 +271,7 @@ const Almacenamiento = () => {
       <h1 style={{ marginBottom: '1.5rem' }}>2. Descarga y Almacenamiento Temporal</h1>
       <ModuleHeader 
         title="Asignación de Zonas de Descarga" 
-        description="Indica en qué bahía de la planta debe descargar cada camión luego de haber sido pesado." 
+        description="Indica en qué área de la planta debe descargar cada camión luego de haber sido pesado." 
         benefits="Mantiene un registro exacto de dónde está la basura de cada procedencia, facilitando inspecciones y evitando cuellos de botella."
       />
       <div className="glass-panel" style={{ padding: '2rem' }}>
@@ -283,7 +283,7 @@ const Almacenamiento = () => {
               {weighings.map(w => <option key={w.id} value={w.id}>{w.vehicle?.plateNumber || 'ID:'+w.id.slice(0,8)} - Neto: {kgToTon(w.netWeightKg)} Ton</option>)}
             </select>
           </div>
-          <div><label className="input-label">Zona / Bahía</label><select className="input-field" value={zone} onChange={e=>setZone(e.target.value)}><option>Bahía de Recepción A (Inorgánicos)</option><option>Bahía de Recepción B (Orgánicos)</option><option>Zona de Cuarentena</option></select></div>
+          <div><label className="input-label">Zona / Plataforma de Descarga</label><select className="input-field" value={zone} onChange={e=>setZone(e.target.value)}><option>Plataforma de Descarga General</option><option>Bahía de Recepción Secundaria</option><option>Zona de Cuarentena (Material Peligroso)</option></select></div>
           <div><label className="input-label">Notas de Inspección</label><input type="text" className="input-field" placeholder="Material viene muy húmedo..." value={notes} onChange={e=>setNotes(e.target.value)} /></div>
           <button className="btn btn-primary" style={{ marginTop: '1rem' }}>Asignar a Bahía</button>
         </form>
