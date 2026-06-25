@@ -554,7 +554,7 @@ const Ambiental = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post(`${API_URL}/environmental-logs`, { phLevel: parseFloat(form.ph), dboLevel: parseFloat(form.dbo), dqoLevel: parseFloat(form.dqo) });
+      await axios.post(`${API_URL}/environmental-logs`, { phLevel: parseFloat(form.ph), dboValue: parseFloat(form.dbo), dqoValue: parseFloat(form.dqo) });
       setForm({ ph: '', dbo: '', dqo: '' }); fetchData();
     } catch (error) { alert('Error'); }
   };
@@ -576,7 +576,7 @@ const Ambiental = () => {
           </div>
           <button className="btn btn-primary" style={{ marginTop: '1.5rem' }}>Registrar Parámetros</button>
         </form>
-        <DataTable columns={['ID', 'pH', 'DBO (mg/L)', 'DQO (mg/L)', 'Fecha']} data={data.map(d => ({ id: d.id.slice(0,8), p: d.phLevel, db: d.dboLevel, dq: d.dqoLevel, date: new Date(d.recordedAt).toLocaleString() }))} />
+        <DataTable columns={['ID', 'pH', 'DBO (mg/L)', 'DQO (mg/L)', 'Fecha']} data={data.map(d => ({ id: d.id.slice(0,8), p: d.phLevel, db: d.dboValue, dq: d.dqoValue, date: new Date(d.recordedAt).toLocaleString() }))} />
       </div>
     </div>
   );
