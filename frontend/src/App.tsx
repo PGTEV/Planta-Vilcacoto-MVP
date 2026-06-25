@@ -101,8 +101,11 @@ const kgToTon = (kg: number) => (kg / 1000).toFixed(2);
 // ---------------- UI COMPONENTS ----------------
 
 const Dashboard = () => {
+  const [dateFilter, setDateFilter] = useState('all');
+  const [rawData, setRawData] = useState({ weighings: [], segregations: [] });
   const [stats, setStats] = useState({ vehicles: 0, recoveredTon: 0, efficiency: 0 });
 
+  // 1. Descargar datos una sola vez
   useEffect(() => {
     const fetchStats = async () => {
       try {
@@ -110,25 +113,7 @@ const Dashboard = () => {
           axios.get(`${API_URL}/weighings`),
           axios.get(`${API_URL}/segregations`)
         ]);
-
-        const weighings = wRes.data;
-        const segregations = sRes.data;
-
-        const vehiclesCount = weighings.length;
-        const totalNetWeightKg = weighings.reduce((sum: number, w: any) => sum + Number(w.netWeightKg), 0);
-        
-        const totalRecoveredKg = segregations.reduce((sum: number, s: any) => 
-          sum + Number(s.paperWeightKg) + Number(s.plasticsWeightKg) + Number(s.glassWeightKg) + 
-          Number(s.metalsWeightKg) + Number(s.textilesWeightKg) + Number(s.organicWeightKg), 0
-        );
-
-        const efficiency = totalNetWeightKg > 0 ? (totalRecoveredKg / totalNetWeightKg) * 100 : 0;
-
-        setStats({
-          vehicles: vehiclesCount,
-          recoveredTon: totalRecoveredKg / 1000,
-          efficiency: efficiency
-        });
+        setRawData({ weighings: wRes.data, segregations: sRes.data });
       } catch (error) {
         console.error("Error cargando dashboard:", error);
       }
@@ -136,14 +121,64 @@ const Dashboard = () => {
     fetchStats();
   }, []);
 
+  // 2. Filtrar y recalcular cuando cambia el filtro
+  useEffect(() => {
+    const now = new Date();
+    let startDate = new Date(0); // Por defecto, desde el inicio de los tiempos
+
+    if (dateFilter === 'today') {
+      startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    } else if (dateFilter === 'week') {
+      startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    } else if (dateFilter === 'month') {
+      startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+    }
+
+    // Filtrar Arrays
+    const filteredWeighings = rawData.weighings.filter((w: any) => new Date(w.createdAt) >= startDate);
+    const filteredSegregations = rawData.segregations.filter((s: any) => new Date(s.dateRecorded || s.createdAt) >= startDate);
+
+    // Calcular
+    const vehiclesCount = filteredWeighings.length;
+    const totalNetWeightKg = filteredWeighings.reduce((sum: number, w: any) => sum + Number(w.netWeightKg), 0);
+    
+    const totalRecoveredKg = filteredSegregations.reduce((sum: number, s: any) => 
+      sum + Number(s.paperWeightKg) + Number(s.plasticsWeightKg) + Number(s.glassWeightKg) + 
+      Number(s.metalsWeightKg) + Number(s.textilesWeightKg) + Number(s.organicWeightKg), 0
+    );
+
+    const efficiency = totalNetWeightKg > 0 ? (totalRecoveredKg / totalNetWeightKg) * 100 : 0;
+
+    setStats({
+      vehicles: vehiclesCount,
+      recoveredTon: totalRecoveredKg / 1000,
+      efficiency: efficiency
+    });
+
+  }, [dateFilter, rawData]);
+
   return (
     <div>
-      <h1 style={{ marginBottom: '1.5rem' }}>Dashboard Gerencial</h1>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+        <h1 style={{ margin: 0 }}>Dashboard Gerencial</h1>
+        <select 
+          className="input-field" 
+          style={{ width: '200px', padding: '0.5rem 1rem', borderRadius: '0.5rem', fontWeight: 'bold' }} 
+          value={dateFilter} 
+          onChange={(e) => setDateFilter(e.target.value)}
+        >
+          <option value="today">Hoy</option>
+          <option value="week">Últimos 7 Días</option>
+          <option value="month">Este Mes</option>
+          <option value="all">Histórico (Todo)</option>
+        </select>
+      </div>
+
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
         <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <div style={{ background: 'rgba(59, 130, 246, 0.1)', padding: '1rem', borderRadius: '50%', color: '#3b82f6' }}><Truck size={24} /></div>
           <div>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>Ingresos Totales (Histórico)</p>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>Ingresos ({dateFilter === 'all' ? 'Total' : 'Período'})</p>
             <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{stats.vehicles} Vehículos</p>
           </div>
         </div>
